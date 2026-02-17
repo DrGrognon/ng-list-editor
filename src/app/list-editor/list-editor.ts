@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 export interface EditableItem<T> {
@@ -31,13 +32,17 @@ export interface EditableItem<T> {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    CdkDropList,
+    CdkDrag
   ],
   templateUrl: './list-editor.html',
   styleUrl: './list-editor.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListEditor<T> {
+  readonly newItem = input<T>();
+  readonly displayArrows = input<boolean>(false);
   readonly list = model.required<T[]>();
   readonly listWithUpdate: Signal<EditableItem<T>[]> = computed(() =>
     this.list().map((item, index) => ({
@@ -45,7 +50,6 @@ export class ListEditor<T> {
       itemChange: (updatedItem: T) => this.updateItem(index, updatedItem)
     }))
   );
-  readonly newItem = input<T>();
 
   readonly childTemplate: Signal<TemplateRef<{
     $implicit: T;
@@ -95,6 +99,14 @@ export class ListEditor<T> {
   updateItem(index: number, update: T): void {
     const updated: T[] = [...this.list()];
     updated[index] = update;
+    this.list.set(updated);
+  }
+
+  protected drop($event: CdkDragDrop<EditableItem<T>[]>) {
+    const updated: T[] = [...this.list()];
+    const temp: T = updated[$event.previousIndex];
+    updated.splice($event.previousIndex, 1);
+    updated.splice($event.currentIndex, 0, temp);
     this.list.set(updated);
   }
 }

@@ -1,23 +1,28 @@
 <div class="hw-list-editor">
+  <div cdkDropList class="hw-list-editor__list" (cdkDropListDropped)="drop($event)">
+
   @for (itemAndUpdate of listWithUpdate(); track $index) {
-    <div class="hw-list-editor__row">
+    <div class="hw-list-editor__row" cdkDrag>
       <ng-container *ngTemplateOutlet="childTemplate(); context: {
       $implicit: itemAndUpdate.item, item: itemAndUpdate.item, itemChange: itemAndUpdate.itemChange
       }"></ng-container>
 
       <div class="hw-list-editor__actions">
-        <button mat-icon-button (click)="moveUp($index)" [disabled]="$first" type="button">
-          <mat-icon>arrow_upward</mat-icon>
-        </button>
-        <button mat-icon-button (click)="moveDown($index)" [disabled]="$last" type="button">
-          <mat-icon>arrow_downward</mat-icon>
-        </button>
+        @if (displayArrows()) {
+          <button mat-icon-button (click)="moveUp($index)" [disabled]="$first" type="button">
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+          <button mat-icon-button (click)="moveDown($index)" [disabled]="$last" type="button">
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
+        }
         <button mat-icon-button color="warn" (click)="removeDefinition($index)" type="button">
-          <mat-icon>delete</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
       </div>
     </div>
   }
+  </div>
 
   @if (newItem() !== undefined) {
     <button mat-stroked-button color="primary" (click)="addItem()" type="button"
