@@ -29,10 +29,6 @@ export interface EditableItem<T> {
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    FormsModule,
     CdkDropList,
     CdkDrag
   ],
