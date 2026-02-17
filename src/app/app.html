@@ -1,11 +1,11 @@
 <main class="main">
   <div>
     Hello Monde !
-    <app-list-editor [(list)]="counters" [newItem]="0" [displayArrows]="true">
+    <hw-list-editor [(list)]="counters" [newItem]="0" [displayArrows]="true">
       <ng-template let-item let-itemChange="itemChange">
         <app-counter-increment [count]="item" (countChange)="itemChange($event)"></app-counter-increment>
       </ng-template>
-    </app-list-editor>
+    </hw-list-editor>
 
     {{counters() | json}}
   </div>
