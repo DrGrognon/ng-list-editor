@@ -1,7 +1,7 @@
 <main class="main">
   <div>
     Hello Monde !
-    <app-list-editor [(list)]="counters" [newItem]="0">
+    <app-list-editor [(list)]="counters" [newItem]="0" [displayArrows]="true">
       <ng-template let-item let-itemChange="itemChange">
         <app-counter-increment [count]="item" (countChange)="itemChange($event)"></app-counter-increment>
       </ng-template>

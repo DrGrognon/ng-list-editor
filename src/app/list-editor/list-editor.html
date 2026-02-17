@@ -3,9 +3,11 @@
 
   @for (itemAndUpdate of listWithUpdate(); track $index) {
     <div class="hw-list-editor__row" cdkDrag>
-      <ng-container *ngTemplateOutlet="childTemplate(); context: {
-      $implicit: itemAndUpdate.item, item: itemAndUpdate.item, itemChange: itemAndUpdate.itemChange
-      }"></ng-container>
+      <div class="hw-list-editor__content">
+        <ng-container *ngTemplateOutlet="childTemplate(); context: {
+            $implicit: itemAndUpdate.item, item: itemAndUpdate.item, itemChange: itemAndUpdate.itemChange
+            }"></ng-container>
+      </div>
 
       <div class="hw-list-editor__actions">
         @if (displayArrows()) {
